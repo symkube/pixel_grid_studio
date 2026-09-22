@@ -16,6 +16,18 @@
 
 ---
 
+## 界面速览 / Quick look
+
+从自动识别开始，再对照原图调整网格和每格颜色，最后导出像素 PNG。
+Start with automatic detection, refine the grid and cell colors, then export a pixel PNG.
+
+| 调整网格 / Refine the grid | 调整颜色 / Refine cell colors |
+| --- | --- |
+| [![网格校准界面：人物原图上叠加可调整的网格线与端点](docs/screenshots/grid-calibration.jpg)](docs/screenshots/grid-calibration.jpg) | [![颜色调整界面：查看修改后的像素图并调整取色参数](docs/screenshots/color-cleanup.jpg)](docs/screenshots/color-cleanup.jpg) |
+| 对照原图检查格子边界，拖动网格线或端点，修正局部错位。<br>Inspect cell boundaries against the source image and drag grid lines to refine alignment. | 检查多色格，按需使用众数、均值或手动取色，并查看修改后的画面。<br>Review mixed-color cells and choose dominant-color, mean, or manual sampling. |
+
+<sub>截图来自在线版内置示例，展示网格与颜色编辑区域；点击图片可查看大图。 / Screenshots show editing areas using a built-in example from the live app. Click either image to enlarge.</sub>
+
 ## 🇨🇳 中文说明
 
 ### 🧐 为什么需要「像素校准室」？
