@@ -1,0 +1,88 @@
+const { chromium } = require('playwright');
+const assert = require('node:assert/strict');
+const fs = require('node:fs/promises');
+const path = require('node:path');
+const { pathToFileURL } = require('node:url');
+
+(async () => {
+  const artifacts = path.resolve(__dirname, '../.artifacts'); await fs.mkdir(artifacts, { recursive: true });
+  const browser = await chromium.launch({ headless: true, channel: 'msedge' });
+  try {
+    const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+    const errors = []; page.on('pageerror', e => errors.push(e.message)); page.on('dialog', dialog => dialog.accept());
+    await page.goto(pathToFileURL(path.resolve(__dirname, '../index.html')).href);
+    assert.equal(await page.locator('body').getAttribute('data-step'), '1');
+    const fixture = await page.evaluate(() => {
+      const c = document.createElement('canvas'); c.width = 120; c.height = 100; const ctx = c.getContext('2d');
+      for (let y = 0; y < 5; y++) for (let x = 0; x < 6; x++) { ctx.fillStyle = (x + y) % 2 ? '#d4583c' : '#2c7599'; ctx.fillRect(x * 20, y * 20, 20, 20); }
+      return c.toDataURL();
+    });
+    const upload = { name: 'fixture.png', mimeType: 'image/png', buffer: Buffer.from(fixture.split(',')[1], 'base64') };
+    await page.locator('#image-input').setInputFiles(upload);
+    await page.locator('#crop-dialog[open]').waitFor();
+    for (const [key, value] of Object.entries({ x: 10, y: 10, w: 100, h: 80 })) { await page.locator('#crop-' + key).fill(String(value)); await page.locator('#crop-' + key).press('Tab'); }
+    await page.locator('#crop-apply').click();
+    await page.waitForFunction(() => document.body.dataset.step === '2');
+    assert.equal(await page.locator('#image-size').textContent(), '100 × 80');
+    assert.equal(await page.locator('#cols').inputValue(), '1');
+    await page.locator('#detect').click(); await page.waitForFunction(() => !document.querySelector('#detect').disabled);
+    assert.equal(await page.locator('body').getAttribute('data-step'), '2');
+    await page.locator('#step-next').click(); await page.waitForFunction(() => document.body.dataset.step === '3');
+    const project = { version: 1, name: 'workflow-fixture', image: fixture, width: 120, height: 100, xs: [0, 20, 22, 40, 80, 100, 120], ys: [0, 20, 40, 60, 80, 100], samples: {}, colors: {}, threshold: 16, edgeWeight: 0.35, gridOptions: { hintX: 20, hintY: 20 } };
+    await page.locator('#project-input').setInputFiles({ name: 'fixture.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(project)) });
+    await page.locator('#confirm-dialog[open]').waitFor(); await page.locator('#confirm-dialog button[value=confirm]').click();
+    await page.waitForFunction(() => document.querySelector('#filename').textContent === 'workflow-fixture');
+    assert.equal(await page.locator('#grid-issue-count').textContent(), '1 处过宽 · 1 处过窄');
+    await page.locator('#review-wide').click(); await page.locator('#review-skip').click();
+    assert.match(await page.locator('#review-status').textContent(), /已跳过 1/);
+    await page.locator('#review-stop').click(); await page.locator('#review-wide').click(); await page.locator('#review-apply').click();
+    assert.equal(await page.locator('#cols').inputValue(), '7');
+    await page.locator('#undo').click(); assert.equal(await page.locator('#cols').inputValue(), '6');
+    await page.locator('#split-all').click(); assert.equal(await page.locator('#cols').inputValue(), '7');
+    await page.locator('#review-narrow').click(); await page.locator('#review-apply').click();
+    assert.equal(await page.locator('#cols').inputValue(), '6');
+    await page.locator('#undo').click(); await page.locator('#merge-all').click();
+    assert.equal(await page.locator('#grid-issue-count').textContent(), '没有宽窄异常');
+    const handle = i => page.locator('.grid-handle[data-axis=x][data-side=top][data-index="' + i + '"]');
+    await handle(1).click(); await handle(3).click();
+    assert.equal(await page.locator('.grid-handle.selected[data-side=top]').count(), 3);
+    await page.screenshot({ path: path.join(artifacts, 'workflow-grid.png') });
+    await page.locator('#merge-lines').click(); assert.equal(await page.locator('#cols').inputValue(), '4');
+    await page.locator('#undo').click(); assert.equal(await page.locator('#cols').inputValue(), '6');
+    const h1 = await handle(1).boundingBox(), h3 = await handle(3).boundingBox();
+    await page.mouse.move(h1.x - 5, h1.y - 5); await page.mouse.down(); await page.mouse.move(h3.x + h3.width + 5, h3.y + h3.height + 5, { steps: 4 }); await page.mouse.up();
+    assert.equal(await page.locator('.grid-handle.selected[data-side=top]').count(), 3);
+    await page.locator('#merge-lines').click();
+    await page.locator('[data-step="4"]').click();
+    await page.locator('[name=color-mode][value=mean]').check();
+    assert.equal(await page.locator('[name=color-mode][value=mode]').isChecked(), false);
+    await page.locator('#multi-color-threshold-number').fill('80');
+    await page.locator('#multi-color-threshold-number').press('Tab');
+    assert.equal(await page.locator('#multi-color-threshold').inputValue(), '80');
+    await page.locator('[data-help="color-threshold"]').click();
+    assert.match(await page.locator('#parameter-help-text').textContent(), /越小.*越大/);
+    await page.locator('#parameter-help-dialog button').click();
+    await page.locator('[name=color-view][value=multicolor]').check();
+    assert.equal(await page.locator('[name=color-view][value=multicolor]').isChecked(), true);
+    await page.locator('[name=color-view][value=all]').check();
+    await page.locator('#source-canvas').click({ position: { x: 20, y: 20 } });
+    await page.locator('[name=color-mode][value=manual]').check(); await page.locator('#cell-color').fill('#ff00ff'); await page.locator('#apply-color').click();
+    assert.equal(await page.locator('#manual-count').textContent(), '1 格');
+    const downloadEvent = page.waitForEvent('download'); await page.locator('#save-project').click();
+    const download = await downloadEvent, savedPath = path.join(artifacts, 'workflow.pixel.json'); await download.saveAs(savedPath);
+    const saved = JSON.parse(await fs.readFile(savedPath, 'utf8'));
+    assert.equal(saved.samplingMode, 'mode'); assert.equal(saved.hasGrid, true);
+    assert.ok(Math.abs(saved.xs[1] - 121 / 3) < 1e-9); assert.equal(saved.image, fixture);
+    await page.locator('[name=color-mode][value=mode]').check(); await page.locator('#resample-selection').click();
+    assert.equal(await page.locator('#manual-count').textContent(), '0 格');
+    await page.screenshot({ path: path.join(artifacts, 'workflow-color.png') });
+    await page.locator('#image-input').setInputFiles(upload); await page.locator('#crop-dialog[open]').waitFor(); await page.locator('#crop-cancel').click();
+    assert.equal(await page.locator('#filename').textContent(), 'workflow-fixture');
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('#fit').click();
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    await page.screenshot({ path: path.join(artifacts, 'workflow-mobile.png'), fullPage: true });
+    assert.deepEqual(errors, []);
+    console.log('Workflow smoke passed: crop, steps, continuous box selection, average merge, anomaly batch/review, color modes, save and undo.');
+  } finally { await browser.close(); }
+})().catch(error => { console.error(error); process.exitCode = 1; });

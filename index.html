@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>像素校准室 · Pixel Studio</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="i18n.js"></script>
+  <script defer src="vendor/lucide.min.js"></script>
+  <script defer src="grid.js"></script>
+  <script defer src="core.js"></script>
+  <script defer src="crop.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand"><span class="brand-icon"><i data-lucide="grid-2x2"></i></span><strong>像素校准室</strong></div>
+    <div class="header-document"><div class="document-name"><i data-lucide="image"></i><span id="filename">山间小屋 · 示例</span><span class="badge" id="image-size"></span></div><span id="dirty-state">本地工作区</span></div>
+    <div class="header-actions">
+      <label class="language-picker" for="language-select"><i data-lucide="languages"></i><span>语言</span><select id="language-select" aria-label="界面语言"><option value="zh-CN">中文</option><option value="en">English</option></select></label>
+      <button id="open-project" class="quiet" title="打开项目"><i data-lucide="folder-open"></i><span class="optional">打开项目</span></button>
+      <button id="save-project" class="quiet" title="保存项目"><i data-lucide="save"></i><span class="optional">保存项目</span></button>
+      <span class="separator"></span>
+      <button id="import" class="secondary"><i data-lucide="image-plus"></i><span>导入图片</span></button>
+      <button id="export" class="primary"><i data-lucide="download"></i><span>导出 PNG</span></button>
+    </div>
+  </header>
+  <nav class="workflow" aria-label="处理步骤">
+    <button data-step="1" aria-current="step"><span>1</span>选择图片</button>
+    <button data-step="2"><span>2</span>自动识别</button>
+    <button data-step="3"><span>3</span>手动调整网格</button>
+    <button data-step="4"><span>4</span>手动调整颜色</button>
+  </nav>
+
+  <main class="workspace">
+    <aside class="settings">
+      <section data-phase="2"><div class="section-heading"><h2>自动识别</h2></div>
+        <button id="detect" class="detect-button"><i data-lucide="scan-line"></i>自动识别网格</button>
+        <div class="detection-status"><span class="status-dot"></span><span id="grid-status">等待分析</span></div>
+        <p id="grid-edits" class="parameter-note" role="status" hidden></p>
+        <div id="spacing-candidates" class="spacing-options">
+          <div class="spacing-axis" data-spacing-axis="x"><label for="hint-x">横向间距 <span>px</span></label><input id="hint-x" type="number" min="0" max="512" step="0.1" value="0"><div id="candidates-x" class="candidate-list" aria-label="横向间距候选"></div></div>
+          <div class="spacing-axis" data-spacing-axis="y"><label for="hint-y">纵向间距 <span>px</span></label><input id="hint-y" type="number" min="0" max="512" step="0.1" value="0"><div id="candidates-y" class="candidate-list" aria-label="纵向间距候选"></div></div>
+        </div>
+        <details class="grid-tuning"><summary>高级参数</summary>
+          <div class="parameter-field"><div class="parameter-heading"><label for="spacing-weight">间距约束</label><button class="parameter-help icon-button" data-help="spacing-weight" aria-label="间距约束说明" title="间距约束说明"><i data-lucide="circle-help"></i></button></div><div class="percent-control"><input id="spacing-weight" type="range" min="0" max="100" step="1" value="15" aria-label="间距约束"><div><input id="spacing-weight-number" type="number" min="0" max="100" step="1" value="15" aria-label="间距约束百分比"><span>%</span></div></div></div>
+          <div class="parameter-field"><div class="parameter-heading"><label for="search-ratio">搜索半径 / 间距</label><button class="parameter-help icon-button" data-help="search-ratio" aria-label="搜索半径说明" title="搜索半径说明"><i data-lucide="circle-help"></i></button></div><div class="percent-control"><input id="search-ratio" type="range" min="0" max="100" step="1" value="35" aria-label="搜索半径 / 间距"><div><input id="search-ratio-number" type="number" min="0" max="100" step="1" value="35" aria-label="搜索半径百分比"><span>%</span></div></div></div>
+          <div class="parameter-field"><div class="parameter-heading"><label for="local-window">局部窗口 / 原图</label><button class="parameter-help icon-button" data-help="local-window" aria-label="局部窗口说明" title="局部窗口说明"><i data-lucide="circle-help"></i></button></div><div class="percent-control"><input id="local-window" type="range" min="1" max="100" step="1" value="50" aria-label="局部窗口 / 原图"><div><input id="local-window-number" type="number" min="1" max="100" step="1" value="50" aria-label="局部窗口百分比"><span>%</span></div></div></div>
+          <div class="parameter-field"><div class="parameter-heading"><label for="narrow-ratio">过窄：低于间距</label><button class="parameter-help icon-button" data-help="narrow-ratio" aria-label="过窄阈值说明" title="过窄阈值说明"><i data-lucide="circle-help"></i></button></div><div class="percent-control"><input id="narrow-ratio" type="range" min="0" max="100" step="1" value="60" aria-label="过窄阈值"><div><input id="narrow-ratio-number" type="number" min="0" max="100" step="1" value="60" aria-label="过窄阈值百分比"><span>%</span></div></div></div>
+          <div class="parameter-field"><div class="parameter-heading"><label for="wide-ratio">过宽：超出间距</label><button class="parameter-help icon-button" data-help="wide-ratio" aria-label="过宽阈值说明" title="过宽阈值说明"><i data-lucide="circle-help"></i></button></div><div class="percent-control"><input id="wide-ratio" type="range" min="0" max="100" step="1" value="65" aria-label="过宽阈值"><div><input id="wide-ratio-number" type="number" min="0" max="100" step="1" value="65" aria-label="过宽阈值百分比"><span>%</span></div></div></div>
+          <label class="toggle-row"><span>自动补线与合并窄格</span><input id="aggressive-grid" type="checkbox" checked role="switch"></label>
+        </details>
+        <button id="reset-detection-params" class="reset-params" title="恢复间距候选设置和识别参数，当前网格保留到下一次识别"><i data-lucide="rotate-ccw"></i>重置参数为默认值</button>
+      </section>
+      <section data-phase="3"><div class="section-heading"><h2>手动调整网格</h2></div>
+        <button id="refine-grid" class="primary refine-primary" title="从边缘向中心迭代，结合色块纯净度和梯度调整现有网格"><i data-lucide="scan-line"></i>自动迭代校准</button>
+        <label class="snap-radius-label refine-radius" for="snap-radius">校准位移上限<input id="snap-radius" type="number" min="1" max="40" value="6" aria-label="校准位移上限（像素）"><span>px</span></label>
+        <div id="refine-status" class="detection-status" role="status" hidden><i id="refine-check" data-lucide="circle-check" hidden></i><span id="refine-status-text"></span></div>
+        <button id="insert-lines" class="text-button" hidden><i data-lucide="between-vertical-start"></i><span id="insert-lines-label">应用补线建议</span></button>
+        <button id="next-grid-issue" class="issue-button" disabled><i data-lucide="ruler"></i><span id="grid-issue-count">没有宽窄异常</span><i data-lucide="arrow-right"></i></button>
+        <div class="repair-actions">
+          <button id="split-all" class="secondary"><i data-lucide="columns-3"></i>切分全部过宽</button>
+          <button id="merge-all" class="secondary"><i data-lucide="combine"></i>合并全部过窄</button>
+          <button id="review-wide" class="quiet"><i data-lucide="list-checks"></i>逐项确认过宽</button>
+          <button id="review-narrow" class="quiet"><i data-lucide="list-checks"></i>逐项确认过窄</button>
+        </div>
+        <div id="issue-review" class="issue-review" hidden>
+          <p id="review-status" role="status"></p><p id="review-detail"></p>
+          <div class="review-buttons"><button id="review-apply" class="primary">确认</button><button id="review-skip" class="secondary">跳过</button><button id="review-stop" class="icon-button" title="结束确认" aria-label="结束确认"><i data-lucide="x"></i></button></div>
+        </div>
+        <div class="grid-display-settings">
+        <label class="toggle-row"><span>拖动时梯度吸附</span><input id="snap-gradient" type="checkbox" checked role="switch"></label>
+        <label class="toggle-row"><span>显示网格</span><input id="show-grid" type="checkbox" checked role="switch"></label>
+        <label class="toggle-row"><span>显示梯度强度</span><input id="show-gradient" type="checkbox" role="switch"></label>
+        <label class="slider-label" for="grid-opacity"><span>网格透明度</span><output id="grid-opacity-value">45%</output></label><input id="grid-opacity" type="range" min="10" max="90" value="45">
+        </div>
+        <div class="field-pair"><label>列数<input id="cols" type="number" min="1" max="128" value="40"></label><label>行数<input id="rows" type="number" min="1" max="128" value="40"></label></div>
+        <button id="rebuild" class="danger-button"><i data-lucide="refresh-cw"></i>按行列数重建</button>
+        <details id="grid-geometry" class="grid-tuning"><summary>间距与偏移</summary>
+          <div class="field-pair"><label><span>水平间距<button class="parameter-help icon-button" data-help="pitch-x" aria-label="水平间距说明" title="水平间距说明"><i data-lucide="circle-help"></i></button></span><input id="pitch-x" type="number" min="2" step="0.5"></label><label><span>垂直间距<button class="parameter-help icon-button" data-help="pitch-y" aria-label="垂直间距说明" title="垂直间距说明"><i data-lucide="circle-help"></i></button></span><input id="pitch-y" type="number" min="2" step="0.5"></label></div>
+          <div class="field-pair"><label><span>水平偏移<button class="parameter-help icon-button" data-help="origin-x" aria-label="水平偏移说明" title="水平偏移说明"><i data-lucide="circle-help"></i></button></span><input id="origin-x" type="number" min="0" step="0.5"></label><label><span>垂直偏移<button class="parameter-help icon-button" data-help="origin-y" aria-label="垂直偏移说明" title="垂直偏移说明"><i data-lucide="circle-help"></i></button></span><input id="origin-y" type="number" min="0" step="0.5"></label></div>
+        </details>
+        <button id="reset-grid-params" class="reset-params" title="恢复校准位移、吸附及网格显示参数，保留当前网格边界"><i data-lucide="rotate-ccw"></i>重置参数为默认值</button>
+      </section>
+      <section data-phase="4"><div class="section-heading"><h2>手动调整颜色</h2></div>
+        <div class="color-view-modes" id="color-view-buttons">
+          <div class="color-view-label">查看显示</div>
+          <div class="color-view-row"><button type="button" data-color-base="original"><i data-lucide="image"></i>查看原图</button><button type="button" data-color-base="modified" class="active"><i data-lucide="grid-2x2"></i>查看修改后</button></div>
+          <div class="color-view-row"><button type="button" data-color-category="mode">众数格</button><button type="button" data-color-category="mean">均值格</button><button type="button" data-color-category="manual">手动颜色</button><button type="button" data-color-category="multicolor">多色格</button></div>
+        </div>
+        <p id="color-view-counts" class="parameter-note" role="status"></p>
+        <button id="apply-mode-all" class="secondary"><i data-lucide="wand-sparkles"></i>对当前所有非多色格应用众数取色</button>
+        <button id="reset-color-state" class="quiet" title="恢复所有格子的初始颜色状态，保留图片与网格，可撤销"><i data-lucide="rotate-ccw"></i>重置回初始状态</button>
+        <div class="color-parameter"><div class="parameter-heading"><label for="threshold">颜色合并阈值</label><button class="parameter-help icon-button" data-help="color-threshold" aria-label="颜色合并阈值说明" title="颜色合并阈值说明"><i data-lucide="circle-help"></i></button><output id="threshold-value">16</output></div><input id="threshold" type="range" min="2" max="40" value="16"></div>
+        <div class="color-parameter"><div class="parameter-heading"><label for="edge-weight">边缘权重</label><button class="parameter-help icon-button" data-help="color-edge" aria-label="边缘权重说明" title="边缘权重说明"><i data-lucide="circle-help"></i></button><output id="edge-weight-value">35%</output></div><input id="edge-weight" type="range" min="0" max="100" value="35"></div>
+        <div class="color-parameter"><div class="parameter-heading"><label for="multi-color-threshold">多色格阈值</label><button class="parameter-help icon-button" data-help="multi-color-threshold" aria-label="多色格阈值说明" title="多色格阈值说明"><i data-lucide="circle-help"></i></button><output id="multi-color-threshold-value">65%</output></div><div class="percent-control"><input id="multi-color-threshold" type="range" min="0" max="100" value="65"><div><input id="multi-color-threshold-number" type="number" min="0" max="100" value="65" aria-label="多色格阈值百分比"><span>%</span></div></div></div>
+        <button id="apply-mean-issues" class="secondary"><i data-lucide="blend"></i>对当前所有多色格应用均值取色</button>
+        <label class="toggle-row"><span>标记多色格</span><input id="show-issues" type="checkbox" checked role="switch"></label>
+        <button id="next-issue" class="issue-button"><i data-lucide="circle-alert"></i><span id="issue-count">正在计算</span><i data-lucide="arrow-right"></i></button>
+        <button id="reset-color-params" class="reset-params" title="恢复取色阈值、边缘权重与显示参数，保留每格取色方式和手动颜色"><i data-lucide="rotate-ccw"></i>重置参数为默认值</button>
+      </section>
+
+      <div class="step-actions"><button id="step-back" class="icon-button" title="上一步" aria-label="上一步"><i data-lucide="arrow-left"></i></button><button id="step-next" class="secondary">下一步<i data-lucide="arrow-right"></i></button></div>
+      <div class="local-note"><i data-lucide="shield-check"></i>本地处理 · 图片不上传</div>
+    </aside>
+    <section class="editor">
+      <div id="import-start" data-phase="1">
+        <div class="import-heading"><div><h1>选择图片</h1><p>导入一张 AI 像素图，或用下面的例图试一试。</p></div><div class="import-actions"><button id="choose-image" class="primary"><i data-lucide="image-plus"></i>导入图片</button><button id="use-demo" class="quiet"><i data-lucide="images"></i>浏览例图</button><button id="welcome-continue" class="secondary" hidden>继续当前图片<i data-lucide="arrow-right"></i></button></div></div>
+        <section class="import-examples" id="import-examples" aria-labelledby="examples-title">
+          <div class="import-section-title"><h2 id="examples-title">用例图开始</h2><span>点击图片即可导入</span></div>
+          <div class="example-gallery">
+            <button class="example-image" data-example="pics/hupoling.png" title="导入例图 hupoling.png"><img src="pics/hupoling.png" alt="蓝色背景的人物像素头像"><span>hupoling.png<i data-lucide="arrow-up-right"></i></span></button>
+            <button class="example-image" data-example="pics/lvdong.jpg" title="导入例图 lvdong.jpg"><img src="pics/lvdong.jpg" alt="例图 lvdong"><span>lvdong.jpg<i data-lucide="arrow-up-right"></i></span></button>
+            <button class="example-image" data-example="pics/mingqiannailv.jpg" title="导入例图 mingqiannailv.jpg"><img src="pics/mingqiannailv.jpg" alt="带白色像素描边的人物头像"><span>mingqiannailv.jpg<i data-lucide="arrow-up-right"></i></span></button>
+            <button class="example-image" data-example="pics/nailong.png" title="导入例图 nailong.png"><img src="pics/nailong.png" alt="例图 nailong"><span>nailong.png<i data-lucide="arrow-up-right"></i></span></button>
+            <button class="example-image" data-example="pics/yuexinmao.png" title="导入例图 yuexinmao.png"><img src="pics/yuexinmao.png" alt="例图 yuexinmao"><span>yuexinmao.png<i data-lucide="arrow-up-right"></i></span></button>
+          </div>
+        </section>
+        <section class="import-about" aria-labelledby="about-title"><h2 id="about-title">适合什么样的图片？</h2><p>适合质量较高、像素轮廓较清楚的 AI 生成图，重点是手动调整原图色块与目标网格的对应关系。优先保留面部等局部特征，因此不同区域可能出现程度不一的压缩或拉伸。</p><p>更适合制作 <strong>60 × 60 格以下</strong>的像素图。更高格数也能处理，但相比其他工具，优势可能不明显。</p></section>
+        <section class="import-tips" aria-labelledby="tips-title"><h2 id="tips-title">生成图片前的建议</h2>
+          <ol class="generation-tips">
+            <li><h3>两张参考图，分工更明确</h3><p>推荐尝试 GPT 或 Banana 图像生成模型，同时提供一张<strong>画风参考</strong>和一张<strong>内容参考</strong>，分别说明要借鉴的像素风格和要描绘的主体。</p></li>
+            <li class="outline-tip"><div><h3>给主体加像素白边，保留背景</h3><p>要求主体外围有<strong>阶梯状白色像素描边</strong>，并配上背景。这有助于模型表现更清晰、规整的像素网格，但仍可能需要校准。</p></div><figure><img src="pics/white-outline-reference.png" alt="白色阶梯描边与青色背景的像素画示例"><figcaption>像素白边示意</figcaption></figure></li>
+            <li><h3>明确哪些特征最重要</h3><p>在指令里说明细节的优先级，例如：<strong>强调面部特征，简化身体细节</strong>，让有限的像素集中表达主体的辨识度。</p></li>
+            <li><h3>像素格数只是目标，不是保证</h3><p>可以要求特定的像素宽高，但模型往往难以严格遵循，且倾向生成更多格子。例如要求 15 × 15，实际可能接近 25 × 25；要求 30 × 30，可能接近 50 × 50。<strong>这些是经验示例，不是固定换算比例。</strong></p></li>
+          </ol>
+        </section>
+      </div>
+      <div class="canvas-toolbar"><div class="tool-group" role="toolbar" aria-label="编辑工具">
+        <button data-tool="select" class="icon-button active" title="选择格子" aria-label="选择格子"><i data-lucide="mouse-pointer-2"></i></button>
+        <button data-tool="grid" class="icon-button" title="调整网格线" aria-label="调整网格线"><i data-lucide="grid-3x3"></i></button>
+      </div><span id="tool-name">选择格子</span>      <div id="grid-edit-actions" class="grid-edit-actions" hidden>
+        <button id="merge-lines" class="secondary" disabled><i data-lucide="combine"></i><span id="merge-lines-label">合并选中网格线</span></button>
+        <button id="add-line" class="secondary" aria-pressed="false"><i data-lucide="plus"></i>手动加入网格线</button>
+        <div id="add-line-controls" class="add-line-controls" hidden><fieldset class="line-direction" aria-label="新网格线方向"><label><input type="radio" name="line-direction" value="x" checked><span><i data-lucide="columns-2"></i>竖线</span></label><label><input type="radio" name="line-direction" value="y"><span><i data-lucide="rows-2"></i>横线</span></label></fieldset><button id="cancel-add-line" class="icon-button" title="取消加线" aria-label="取消加线"><i data-lucide="x"></i></button></div>
+      </div>
+      <div id="cell-color-tools" class="cell-color-tools" hidden>
+        <span class="cell-color-title">所选格子取色方式</span>
+        <div class="cell-color-buttons" role="toolbar" aria-label="所选格子取色方式">
+          <button type="button" data-cell-color-mode="mode" title="对所选格子应用众数取色">众数</button>
+          <button type="button" data-cell-color-mode="mean" title="对所选格子应用均值取色">均值</button>
+          <button type="button" data-cell-color-mode="manual" title="放大所选格子并从原图取色">手动取色</button>
+        </div>
+        <span id="cell-color-hint">先在画布中选择格子</span>
+      </div>
+<div class="history" aria-label="编辑历史"><button id="undo" class="icon-button" title="撤销" aria-label="撤销"><i data-lucide="undo-2"></i></button><button id="redo" class="icon-button" title="重做" aria-label="重做"><i data-lucide="redo-2"></i></button></div><div class="zoom-tools"><button id="zoom-out" class="icon-button" title="缩小" aria-label="缩小"><i data-lucide="minus"></i></button><span id="zoom-value">100%</span><button id="zoom-in" class="icon-button" title="放大" aria-label="放大"><i data-lucide="plus"></i></button><button id="fit" class="icon-button" title="适应画布" aria-label="适应画布"><i data-lucide="maximize"></i></button></div></div>
+      <div class="canvas-heading"><span><span class="tiny-dot"></span><span id="canvas-view-title">原图与网格</span></span><div id="spacing-preview-bar" hidden><output id="spacing-preview-label"></output><button id="close-spacing-preview" class="icon-button" title="结束间距预览" aria-label="结束间距预览"><i data-lucide="x"></i></button></div><span id="grid-dimensions"></span></div>
+      <div id="grid-warning-legend" class="warning-legend" aria-label="网格标记说明" hidden>
+        <span class="warning-legend-label">标记说明</span>
+        <button data-warning-help="dashed" title="虚线表示推测边界、边缘冲突或待确认的调整建议；点击查看各颜色含义" aria-label="虚线标记说明"><span class="warning-swatch warning-dashed" aria-hidden="true"></span>虚线<i data-lucide="circle-help"></i></button>
+        <button data-warning-help="wide" title="橙色区域表示间距超过当前过宽阈值，可能缺少分割线" aria-label="过宽标记说明"><span class="warning-swatch warning-wide" aria-hidden="true"></span>过宽<i data-lucide="circle-help"></i></button>
+        <button data-warning-help="narrow" title="粉色区域表示间距低于当前过窄阈值，可能存在多余分割线" aria-label="过窄标记说明"><span class="warning-swatch warning-narrow" aria-hidden="true"></span>过窄<i data-lucide="circle-help"></i></button>
+      </div>
+      <div id="canvas-viewport" class="canvas-viewport"><div id="canvas-stage" class="canvas-stage"><canvas id="source-canvas" aria-label="原图网格编辑画布"></canvas><div id="grid-handles" class="grid-handles" aria-label="网格线端点"></div><div id="line-select-box" class="line-select-box" hidden></div></div><div id="drop-overlay">松开以导入图片</div></div>
+      <div class="canvas-footer"><span id="cursor-position">X — &nbsp; Y —</span><span id="selection-status">未选择</span></div>
+    </section>
+    <aside class="results">
+      <section class="preview-section"><div class="section-heading"><h2>像素预览</h2><span class="live-badge"><span></span>实时</span></div><div class="preview-checker"><canvas id="preview-canvas" aria-label="最终像素预览"></canvas></div><div class="preview-meta"><strong id="output-size"></strong><span id="color-count"></span></div><div class="palette" id="palette"></div></section>
+      <div class="preview-summary" data-phase="4">手动颜色 <strong id="manual-count">0 格</strong></div>
+      <section class="export-settings" data-phase="4"><div class="section-heading"><h2>导出设置</h2></div><label class="select-label">PNG 缩放<select id="export-scale"><option value="1">1× · 原始像素</option><option value="8">8× · 清晰放大</option><option value="16" selected>16× · 清晰放大</option><option value="32">32× · 清晰放大</option></select></label><div class="export-size" id="export-size"></div></section>
+      <details class="project-actions" data-phase="4"><summary>项目操作</summary><button id="reset-all" class="text-button danger"><i data-lucide="rotate-ccw"></i>重置全部调整</button></details>
+    </aside>
+  </main>
+  <input id="image-input" type="file" accept="image/png,image/jpeg,image/webp" hidden><input id="project-input" type="file" accept=".json,application/json" hidden>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <dialog id="parameter-help-dialog" aria-labelledby="parameter-help-title"><form method="dialog"><h2 id="parameter-help-title"></h2><p id="parameter-help-text"></p><div class="dialog-actions"><button class="primary" value="close">关闭</button></div></form></dialog>
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-message"><form method="dialog"><h2><i id="confirm-warning-icon" data-lucide="triangle-alert" hidden></i><span id="confirm-title">替换当前画面？</span></h2><p id="confirm-message">当前未保存的调整将被清除。</p><div class="dialog-actions"><button value="cancel" class="secondary">取消</button><button value="confirm" class="primary">继续</button></div></form></dialog>
+  <dialog id="alpha-dialog" aria-labelledby="alpha-title">
+    <form method="dialog"><h2 id="alpha-title">图片含有效透明度</h2>
+      <p id="alpha-description"></p>
+      <label class="alpha-option"><input type="radio" name="alpha-treatment" value="keep" checked><span><strong>保留透明</strong><small>保留原有透明与半透明效果。</small></span></label>
+      <label class="alpha-option"><input type="radio" name="alpha-treatment" value="flatten"><span><strong>铺底色，转为不透明图片</strong><small>将透明和半透明区域与所选底色混合。</small></span></label>
+      <label class="alpha-background">底色<input id="alpha-background" type="color" value="#ffffff"></label>
+      <label class="alpha-option"><input type="radio" name="alpha-treatment" value="solid"><span><strong>可见像素转不透明</strong><small>保留完全透明区域，将其余像素的透明度设为 100%；边缘可能变硬。</small></span></label>
+      <div class="dialog-actions"><button value="cancel" class="quiet">取消导入</button><button value="continue" class="primary">继续导入</button></div>
+    </form>
+  </dialog>
+  <dialog id="crop-dialog">
+    <div class="section-heading"><h2>裁剪图片</h2><div class="tool-group"><button id="crop-new" class="icon-button" title="重新框选" aria-label="重新框选" aria-pressed="false"><i data-lucide="scan"></i></button><button id="crop-reset" class="icon-button" title="重置为整张图片" aria-label="重置为整张图片"><i data-lucide="rotate-ccw"></i></button></div></div>
+    <div class="crop-layout"><div class="crop-preview"><canvas id="crop-canvas" aria-label="裁剪选区" title="拖动边界调整，远离边界拖动重新框选；Alt 拖动框内移动"></canvas></div><aside class="crop-detail"><h2>局部放大</h2><canvas id="crop-lens" width="200" height="200" aria-label="鼠标焦点附近的八倍放大图"></canvas><output id="crop-focus"></output></aside></div>
+    <div class="crop-fields"><label>左<input id="crop-x" type="number" step="1"></label><label>上<input id="crop-y" type="number" step="1"></label><label>宽<input id="crop-w" type="number" step="1"></label><label>高<input id="crop-h" type="number" step="1"></label></div>
+    <p id="crop-error" role="alert"></p><p id="crop-extent" role="status"></p>
+    <div class="dialog-actions"><button id="crop-cancel" class="quiet">取消导入</button><button id="crop-skip" class="secondary">跳过裁剪</button><button id="crop-apply" class="primary"><i data-lucide="crop"></i>裁剪并继续</button></div>
+  </dialog>
+</body>
+</html>

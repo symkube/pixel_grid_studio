@@ -1,0 +1,842 @@
+{
+  "name": "QQ图片20260920123722.jpg",
+  "width": 1254,
+  "height": 1254,
+  "x": {
+    "manualCells": 44,
+    "automaticCells": 44,
+    "manualGapMedian": 29,
+    "manualGapRange": [
+      23,
+      34
+    ],
+    "tinyCells": [
+      {
+        "index": 43,
+        "start": 1253.5,
+        "end": 1254,
+        "gap": 0.5
+      }
+    ],
+    "estimatedPitch": 29,
+    "reportedConfidence": 0.7162524661655384,
+    "selectedCorrelation": 0.7162524661655384,
+    "meanDistanceToNearestAutomatic": 6.058139534883721,
+    "manualBoundaryRecallAt2px": 0.46511627906976744,
+    "topCorrelations": [
+      {
+        "pitch": 29,
+        "correlation": 0.7162524661655384
+      },
+      {
+        "pitch": 28,
+        "correlation": 0.6183071129933829
+      },
+      {
+        "pitch": 58,
+        "correlation": 0.605770707653786
+      },
+      {
+        "pitch": 30,
+        "correlation": 0.5983561789253817
+      },
+      {
+        "pitch": 59,
+        "correlation": 0.534184408819838
+      },
+      {
+        "pitch": 87,
+        "correlation": 0.5167715695721965
+      },
+      {
+        "pitch": 57,
+        "correlation": 0.5141670329420174
+      },
+      {
+        "pitch": 86,
+        "correlation": 0.4743749315013684
+      },
+      {
+        "pitch": 88,
+        "correlation": 0.4269064697300179
+      },
+      {
+        "pitch": 31,
+        "correlation": 0.3917664930998054
+      },
+      {
+        "pitch": 116,
+        "correlation": 0.39167186620328615
+      },
+      {
+        "pitch": 115,
+        "correlation": 0.38397618320807897
+      }
+    ],
+    "manualLines": [
+      0,
+      28,
+      57,
+      89,
+      116,
+      145,
+      168,
+      196,
+      225,
+      253,
+      282,
+      311,
+      339,
+      368,
+      394,
+      425,
+      453,
+      483,
+      512,
+      541,
+      568,
+      600,
+      630,
+      659,
+      689,
+      721,
+      751,
+      785,
+      812,
+      840,
+      873,
+      903,
+      931,
+      961,
+      989,
+      1019,
+      1048,
+      1077,
+      1105,
+      1135,
+      1162,
+      1194,
+      1224,
+      1253.5,
+      1254
+    ],
+    "automaticLines": [
+      0,
+      20,
+      48,
+      78,
+      107,
+      136,
+      168,
+      194,
+      225,
+      253,
+      282,
+      311,
+      339,
+      368,
+      397,
+      425,
+      453,
+      483,
+      512,
+      541,
+      570,
+      600,
+      630,
+      659,
+      689,
+      721,
+      751,
+      774,
+      803,
+      832,
+      861,
+      890,
+      920,
+      948,
+      976,
+      1006,
+      1035,
+      1064,
+      1093,
+      1122,
+      1152,
+      1180,
+      1209,
+      1238,
+      1254
+    ],
+    "boundaryDisplacements": [
+      {
+        "manual": 28,
+        "automaticAtSameIndex": 20,
+        "displacement": -8,
+        "nearestDistance": 8
+      },
+      {
+        "manual": 57,
+        "automaticAtSameIndex": 48,
+        "displacement": -9,
+        "nearestDistance": 9
+      },
+      {
+        "manual": 89,
+        "automaticAtSameIndex": 78,
+        "displacement": -11,
+        "nearestDistance": 11
+      },
+      {
+        "manual": 116,
+        "automaticAtSameIndex": 107,
+        "displacement": -9,
+        "nearestDistance": 9
+      },
+      {
+        "manual": 145,
+        "automaticAtSameIndex": 136,
+        "displacement": -9,
+        "nearestDistance": 9
+      },
+      {
+        "manual": 168,
+        "automaticAtSameIndex": 168,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 196,
+        "automaticAtSameIndex": 194,
+        "displacement": -2,
+        "nearestDistance": 2
+      },
+      {
+        "manual": 225,
+        "automaticAtSameIndex": 225,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 253,
+        "automaticAtSameIndex": 253,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 282,
+        "automaticAtSameIndex": 282,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 311,
+        "automaticAtSameIndex": 311,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 339,
+        "automaticAtSameIndex": 339,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 368,
+        "automaticAtSameIndex": 368,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 394,
+        "automaticAtSameIndex": 397,
+        "displacement": 3,
+        "nearestDistance": 3
+      },
+      {
+        "manual": 425,
+        "automaticAtSameIndex": 425,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 453,
+        "automaticAtSameIndex": 453,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 483,
+        "automaticAtSameIndex": 483,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 512,
+        "automaticAtSameIndex": 512,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 541,
+        "automaticAtSameIndex": 541,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 568,
+        "automaticAtSameIndex": 570,
+        "displacement": 2,
+        "nearestDistance": 2
+      },
+      {
+        "manual": 600,
+        "automaticAtSameIndex": 600,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 630,
+        "automaticAtSameIndex": 630,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 659,
+        "automaticAtSameIndex": 659,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 689,
+        "automaticAtSameIndex": 689,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 721,
+        "automaticAtSameIndex": 721,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 751,
+        "automaticAtSameIndex": 751,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 785,
+        "automaticAtSameIndex": 774,
+        "displacement": -11,
+        "nearestDistance": 11
+      },
+      {
+        "manual": 812,
+        "automaticAtSameIndex": 803,
+        "displacement": -9,
+        "nearestDistance": 9
+      },
+      {
+        "manual": 840,
+        "automaticAtSameIndex": 832,
+        "displacement": -8,
+        "nearestDistance": 8
+      },
+      {
+        "manual": 873,
+        "automaticAtSameIndex": 861,
+        "displacement": -12,
+        "nearestDistance": 12
+      },
+      {
+        "manual": 903,
+        "automaticAtSameIndex": 890,
+        "displacement": -13,
+        "nearestDistance": 13
+      },
+      {
+        "manual": 931,
+        "automaticAtSameIndex": 920,
+        "displacement": -11,
+        "nearestDistance": 11
+      },
+      {
+        "manual": 961,
+        "automaticAtSameIndex": 948,
+        "displacement": -13,
+        "nearestDistance": 13
+      },
+      {
+        "manual": 989,
+        "automaticAtSameIndex": 976,
+        "displacement": -13,
+        "nearestDistance": 13
+      },
+      {
+        "manual": 1019,
+        "automaticAtSameIndex": 1006,
+        "displacement": -13,
+        "nearestDistance": 13
+      },
+      {
+        "manual": 1048,
+        "automaticAtSameIndex": 1035,
+        "displacement": -13,
+        "nearestDistance": 13
+      },
+      {
+        "manual": 1077,
+        "automaticAtSameIndex": 1064,
+        "displacement": -13,
+        "nearestDistance": 13
+      },
+      {
+        "manual": 1105,
+        "automaticAtSameIndex": 1093,
+        "displacement": -12,
+        "nearestDistance": 12
+      },
+      {
+        "manual": 1135,
+        "automaticAtSameIndex": 1122,
+        "displacement": -13,
+        "nearestDistance": 13
+      },
+      {
+        "manual": 1162,
+        "automaticAtSameIndex": 1152,
+        "displacement": -10,
+        "nearestDistance": 10
+      },
+      {
+        "manual": 1194,
+        "automaticAtSameIndex": 1180,
+        "displacement": -14,
+        "nearestDistance": 14
+      },
+      {
+        "manual": 1224,
+        "automaticAtSameIndex": 1209,
+        "displacement": -15,
+        "nearestDistance": 14
+      },
+      {
+        "manual": 1253.5,
+        "automaticAtSameIndex": 1238,
+        "displacement": -15.5,
+        "nearestDistance": 15.5
+      }
+    ]
+  },
+  "y": {
+    "manualCells": 43,
+    "automaticCells": 43,
+    "manualGapMedian": 29,
+    "manualGapRange": [
+      26,
+      32
+    ],
+    "tinyCells": [],
+    "estimatedPitch": 29,
+    "reportedConfidence": 0.8467547778976222,
+    "selectedCorrelation": 0.8467547778976222,
+    "meanDistanceToNearestAutomatic": 0.14285714285714285,
+    "manualBoundaryRecallAt2px": 1,
+    "topCorrelations": [
+      {
+        "pitch": 29,
+        "correlation": 0.8467547778976222
+      },
+      {
+        "pitch": 58,
+        "correlation": 0.7825588129151596
+      },
+      {
+        "pitch": 87,
+        "correlation": 0.7389360638552004
+      },
+      {
+        "pitch": 116,
+        "correlation": 0.6958927209496517
+      },
+      {
+        "pitch": 30,
+        "correlation": 0.6878393187517797
+      },
+      {
+        "pitch": 28,
+        "correlation": 0.6866204051003655
+      },
+      {
+        "pitch": 59,
+        "correlation": 0.6367537178151246
+      },
+      {
+        "pitch": 57,
+        "correlation": 0.6321079433306305
+      },
+      {
+        "pitch": 88,
+        "correlation": 0.6163822072117775
+      },
+      {
+        "pitch": 86,
+        "correlation": 0.6092509803968945
+      },
+      {
+        "pitch": 117,
+        "correlation": 0.5854416973013391
+      },
+      {
+        "pitch": 115,
+        "correlation": 0.5767502158591366
+      }
+    ],
+    "manualLines": [
+      0,
+      31,
+      57,
+      86,
+      117,
+      145,
+      172,
+      204,
+      234,
+      263,
+      292,
+      321,
+      350,
+      380,
+      408,
+      436,
+      467,
+      496,
+      525,
+      556,
+      584,
+      613,
+      642,
+      671,
+      700,
+      730,
+      759,
+      787,
+      816,
+      845,
+      874,
+      903,
+      932,
+      961,
+      990,
+      1019,
+      1047,
+      1076,
+      1105,
+      1135,
+      1164,
+      1193,
+      1222,
+      1254
+    ],
+    "automaticLines": [
+      0,
+      33,
+      57,
+      86,
+      117,
+      145,
+      172,
+      204,
+      234,
+      263,
+      292,
+      321,
+      350,
+      380,
+      408,
+      438,
+      467,
+      494,
+      525,
+      556,
+      584,
+      613,
+      642,
+      671,
+      700,
+      730,
+      759,
+      787,
+      816,
+      845,
+      874,
+      903,
+      932,
+      961,
+      990,
+      1019,
+      1047,
+      1076,
+      1105,
+      1135,
+      1164,
+      1193,
+      1222,
+      1254
+    ],
+    "boundaryDisplacements": [
+      {
+        "manual": 31,
+        "automaticAtSameIndex": 33,
+        "displacement": 2,
+        "nearestDistance": 2
+      },
+      {
+        "manual": 57,
+        "automaticAtSameIndex": 57,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 86,
+        "automaticAtSameIndex": 86,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 117,
+        "automaticAtSameIndex": 117,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 145,
+        "automaticAtSameIndex": 145,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 172,
+        "automaticAtSameIndex": 172,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 204,
+        "automaticAtSameIndex": 204,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 234,
+        "automaticAtSameIndex": 234,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 263,
+        "automaticAtSameIndex": 263,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 292,
+        "automaticAtSameIndex": 292,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 321,
+        "automaticAtSameIndex": 321,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 350,
+        "automaticAtSameIndex": 350,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 380,
+        "automaticAtSameIndex": 380,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 408,
+        "automaticAtSameIndex": 408,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 436,
+        "automaticAtSameIndex": 438,
+        "displacement": 2,
+        "nearestDistance": 2
+      },
+      {
+        "manual": 467,
+        "automaticAtSameIndex": 467,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 496,
+        "automaticAtSameIndex": 494,
+        "displacement": -2,
+        "nearestDistance": 2
+      },
+      {
+        "manual": 525,
+        "automaticAtSameIndex": 525,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 556,
+        "automaticAtSameIndex": 556,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 584,
+        "automaticAtSameIndex": 584,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 613,
+        "automaticAtSameIndex": 613,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 642,
+        "automaticAtSameIndex": 642,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 671,
+        "automaticAtSameIndex": 671,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 700,
+        "automaticAtSameIndex": 700,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 730,
+        "automaticAtSameIndex": 730,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 759,
+        "automaticAtSameIndex": 759,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 787,
+        "automaticAtSameIndex": 787,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 816,
+        "automaticAtSameIndex": 816,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 845,
+        "automaticAtSameIndex": 845,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 874,
+        "automaticAtSameIndex": 874,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 903,
+        "automaticAtSameIndex": 903,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 932,
+        "automaticAtSameIndex": 932,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 961,
+        "automaticAtSameIndex": 961,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 990,
+        "automaticAtSameIndex": 990,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 1019,
+        "automaticAtSameIndex": 1019,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 1047,
+        "automaticAtSameIndex": 1047,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 1076,
+        "automaticAtSameIndex": 1076,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 1105,
+        "automaticAtSameIndex": 1105,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 1135,
+        "automaticAtSameIndex": 1135,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 1164,
+        "automaticAtSameIndex": 1164,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 1193,
+        "automaticAtSameIndex": 1193,
+        "displacement": 0,
+        "nearestDistance": 0
+      },
+      {
+        "manual": 1222,
+        "automaticAtSameIndex": 1222,
+        "displacement": 0,
+        "nearestDistance": 0
+      }
+    ]
+  }
+}
