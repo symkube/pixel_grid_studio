@@ -34,6 +34,20 @@
 - 🎨 **色彩智能纯化**：内置众数取色与均值取色算法，自动消灭边缘羽化与混色噪点，配合多色格排查与放大取色镜。
 - 📐 **多规格灵活导出**：支持导出标准的 1:1 像素点阵图（1格=1像素/1颗豆子），或 8× / 16× / 32× 社交平台无损高清放大图；支持保存 `.pixel.json` 工程随时继续。
 
+#### ⚖️ 与同类项目对比（如 perfectPixel）
+
+社区中也有类似的优秀工具（如 [theamusing/perfectPixel](https://github.com/theamusing/perfectPixel)）。`perfectPixel` 采用 Python + FFT 频域分析与 Sobel 边缘检测，非常适合接入 ComfyUI 等自动化流水线进行大批量处理。
+
+相比之下，**像素校准室 (Pixel Studio)** 拥有更专注的定位与独特优势：
+1. **更加侧重于拼豆（Perler / Fuse Beads）的极低像素场景**：
+   - 拼豆通常在 **60×60 格以内（如 20×20、30×30）**。在极低分辨率下，“1格严格对应1颗实物豆子”，任何1个格子的错位或杂色都会导致手工拼出畸变（如眼睛歪斜、五官丢失）。
+   - 本项目专门针对极低像素下局部拉伸变形、关键辨识度特征进行了算法优化，保留核心神态。
+2. **更方便、更强大的所见即所得手动编辑能力**：
+   - **交互式网格微调**：不仅能自动推算，还能在画布上直接拖拽网格线/端点（支持梯度自动吸附）、手动加线/删线、多选合并线，以及一键批量「切分过宽 / 合并过窄」。
+   - **单格精细色彩修复**：支持众数与均值模式随选切换，独有的「标记多色格」能秒级排查争议混色，并提供「居中放大吸管」从原图精准吸色。
+3. **零门槛、免安装的纯网页交互**：
+   - 无需配置 Python 环境、CUDA 显卡驱动或复杂的 ComfyUI 节点，手机、平板或电脑浏览器打开即用，对普通手工艺人和非技术用户更友好。
+
 ---
 
 ### 🚀 怎么玩？（4 步极速上手）
@@ -132,6 +146,20 @@ When generating pixel-style artwork or fuse bead patterns using AI tools like **
 - 🤖 **Smart Grid Detection**: Estimates horizontal and vertical cell intervals automatically, with 1-click iterative refinement to snap lines to color edges.
 - 🎨 **Intelligent Color Purification**: Mode (majority) and mean color clustering remove anti-aliasing artifacts; built-in multicolor inspection and focused magnifier eyedropper.
 - 📐 **Flexible Export**: Export true 1:1 pixel PNGs (1 cell = 1 pixel / 1 bead) for fuse beads and games, or 8× / 16× / 32× crisp scaled PNGs for social sharing. Project files (`.pixel.json`) let you save and resume anytime.
+
+#### ⚖️ Comparison with Similar Projects (e.g. perfectPixel)
+
+There are other notable projects in the community, such as [theamusing/perfectPixel](https://github.com/theamusing/perfectPixel). `perfectPixel` is a Python-based utility leveraging FFT (Fast Fourier Transform) frequency analysis and Sobel edge detection, ideal for automated pipeline integration (e.g., ComfyUI nodes).
+
+In contrast, **Pixel Studio** has distinct priorities and unique advantages:
+1. **Strong Focus on Ultra-Low-Resolution Fuse Beads (拼豆)**:
+   - Bead crafting typically focuses on grids **under 60×60 (e.g., 20×20, 30×30, 40×40)**, where **1 cell strictly equals 1 real-world physical bead**. At such low resolutions, a single misplaced line or noisy color artifact ruins key features like eyes or smiles.
+   - Pixel Studio's algorithms are specifically tuned to preserve critical facial details and identity even amidst uneven distortion.
+2. **Superior Interactive & Granular Manual Editing Workflow**:
+   - **Interactive visual grid adjustments**: Drag lines and endpoints directly on the canvas (with optional gradient snapping), click to insert lines, select & merge lines, or batch repair wide/narrow cells with 1 click.
+   - **Precise per-cell color recovery**: Easily toggle mode/mean sampling, highlight controversial multicolor cells with one switch, or use the 8× centered zoom lens eyedropper to sample true colors directly from the source image.
+3. **Zero Setup & Client-Side Convenience**:
+   - No Python environment, CUDA, ComfyUI, or command lines required. Works immediately in any desktop or mobile browser with 100% offline-ready local privacy.
 
 ---
 
